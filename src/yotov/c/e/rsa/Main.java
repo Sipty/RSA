@@ -31,7 +31,7 @@ public class Main {
 		p = KeyGen.getP();
 		
 		// apply totient
-		m = (q-1)*(p-1);
+		m = (q-1)*(p-2);
 		// prepare keys
 		n = q*p;
 		e = KeyGen.coprimeTo(m);
