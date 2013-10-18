@@ -11,7 +11,7 @@ public class Crypto {
 	// declarations
 	//public static int[] encrMsg;
     private static ArrayList<Integer> encrMsg = new ArrayList<Integer>();
-    /*
+    
 	public static void encrypt(String msg, int e, int n) {
 		// encrypted message array
 		BigInteger exp, 
@@ -32,11 +32,10 @@ public class Crypto {
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
 	}
-	*/
 	
 	public static void decrypt(int d, int n) {
 		// read encrypted file
-		try {
+		/*try {
 			Scanner sc = new Scanner(new File("Encrypted message.txt"));
 
 			for(int i=0; sc.hasNextInt(); i++) {
@@ -45,8 +44,7 @@ public class Crypto {
 		} catch (IOException e) {
 			System.err.println("Problem writing to file.");
 		}
-		int g=1;
-		System.out.println(encrMsg.get(0) + "+" + "1= " +(encrMsg.get(0)+g) );
+		*/
 		
 		// convert to bigint
 		BigInteger exp, result, 
@@ -56,7 +54,6 @@ public class Crypto {
 		
 		for(int i=0; i<encrMsg.size(); i++) {
 			exp = pow(encrMsg.get(i), d); 
-System.out.println(exp.toString());
 			result = exp.mod(nBig);
 
 			decr += (char)result.intValue();	// decrypt the message
