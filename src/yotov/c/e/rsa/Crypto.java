@@ -12,35 +12,39 @@ public class Crypto {
 		encrMsg = new BigInteger[msg.length()];
 		BigInteger c, exp, 
 			nBig = BigInteger.valueOf(n);
+		// the encrypted msg
+		String encr = "";
 		
 		for(int i=0; i<msg.length(); i++) {
-			// convert to bigint
-			c = BigInteger.valueOf((int)msg.charAt(i));	
+			// convert to BigInteger
+			c = BigInteger.valueOf((int)msg.charAt(i));
 			// encrypting
 			exp = pow(c,e);
 			encrMsg[i] = exp.mod(nBig);
-			// output
-			System.out.println("From: "+c+" to "+encrMsg[i].toString());
+			
+			encr += encrMsg[i].toString()+" ";	// encrypt the message
+			System.out.println("From: "+c+" to "+encrMsg[i].toString());	// output encryption to console
 		}	
+		// write the encrypted message to a file
+		Write.writing(encr, "Encrypted message.txt");
 	}
 	
 	public static void decrypt(int d, int n) {
 		// convert to bigint
 		BigInteger exp, result, 
 			nBig = BigInteger.valueOf(n);
-		
 		// the decrypted msg
-		char[]decr = new char[encrMsg.length];
-
+		String decr="The original message was: \n";
+		
 		for(int i=0; i<encrMsg.length; i++) {
 			exp = pow(encrMsg[i], d); 
 			result = exp.mod(nBig);
-			//result.intValue();
-			System.out.println((char)result.intValue());
-			decr[i] = (char)result.intValue();	// decrypt the message
+
+			decr += (char)result.intValue();	// decrypt the message
+			System.out.println((char)result.intValue());	// output decryption to console
 		}
-		// write the decrypted message
-	    Write.writing(decr);	// move this to a for loop
+		// write the decrypted message to a file
+	    Write.writing(decr, "Decrypted message.txt");
 		
 	}
 	

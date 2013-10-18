@@ -8,15 +8,13 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 public class Write {
-	public static void writing(char[] message) {
+	public static void writing(String message, String file) {
 	    try {
-	        File text = new File("GoodMorningVietnam.txt");
+	        File text = new File(file);
 	        FileOutputStream outputFile = new FileOutputStream(text);
 	        OutputStreamWriter outputStream = new OutputStreamWriter(outputFile);    
 	        Writer writer = new BufferedWriter(outputStream);
-	        for(int i=0; i<message.length; i++) {
-	        	writer.write(message[i]);
-	        }
+	        writer.write(message);
 	        writer.close();
 	    } catch (IOException e) {
 	        System.err.println("Problem writing to file.");
