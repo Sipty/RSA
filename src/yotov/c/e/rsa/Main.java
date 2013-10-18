@@ -40,7 +40,7 @@ public class Main {
 		// output
 		print("q="+q + " p="+p +" n="+n +" m="+m +" e="+e +" d="+d);
 		
-		//Crypto.encrypt("Hello, senor!", e, n);
+		Crypto.encrypt("Hello, senor!", e, n);
 		Crypto.decrypt(d, n);
 		
 	}
