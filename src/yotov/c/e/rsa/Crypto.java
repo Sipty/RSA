@@ -5,25 +5,25 @@ import java.math.BigInteger;
 public class Crypto {
 	
 	// declarations
-	public static BigInteger[] encrMsg;
+	public static int[] encrMsg;
     
 	public static void encrypt(String msg, int e, int n) {
 		// encrypted message array
-		encrMsg = new BigInteger[msg.length()];
-		BigInteger c, exp, 
+		encrMsg = new int[msg.length()];
+		BigInteger exp, 
 			nBig = BigInteger.valueOf(n);
 		// the encrypted msg
 		String encr = "";
 		
 		for(int i=0; i<msg.length(); i++) {
 			// convert to BigInteger
-			c = BigInteger.valueOf((int)msg.charAt(i));
+			int c = (int)msg.charAt(i);
 			// encrypting
 			exp = pow(c,e);
-			encrMsg[i] = exp.mod(nBig);
+			encrMsg[i] = exp.mod(nBig).intValue();
 			
-			encr += encrMsg[i].toString()+" ";	// encrypt the message
-			System.out.println("From: "+c+" to "+encrMsg[i].toString());	// output encryption to console
+			encr += encrMsg[i]+" ";	// encrypt the message
+			System.out.println("From: "+c+" to "+encrMsg[i]);	// output encryption to console
 		}	
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
@@ -49,14 +49,15 @@ public class Crypto {
 	}
 	
 	// change to private
-	private static BigInteger pow(BigInteger x, int n) {
+	private static BigInteger pow(int x, int n) {
 		BigInteger result = BigInteger.valueOf(1);
+		BigInteger xBig = BigInteger.valueOf(x);
 		while(n!=0) {
 			if(n%2!=0) {
-				result = result.multiply(x);
+				result = result.multiply(xBig);
 				n -= 1;
 			}
-			x = x.multiply(x);
+			xBig = xBig.multiply(xBig);
 			n /= 2;
 		}
 		return result;
