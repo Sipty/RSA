@@ -7,7 +7,7 @@ public class KeyGen {
 	
 	// Declarations
 	// find all primals up to max
-    private static int max = 1000, min = 1,	// primes' range
+    private static int max = 100, min = 10,	// primes' range
     				p=0, q=0; 	// p, q - the primes
 
     // declare arrays
@@ -107,7 +107,7 @@ public class KeyGen {
 	// getters
 	public static int getP() {
 	    do {
-	        p = primePool.get(rng(0, primePool.size()));
+	        p = primePool.get(rng(0, (primePool.size()-1)));
 	    }while(p<min);
 	    
 		return p;
@@ -115,7 +115,7 @@ public class KeyGen {
 	
 	public static int getQ() {
 	    do {
-	        q = primePool.get(rng(0, primePool.size()));
+	        q = primePool.get(rng(0, (primePool.size()-1)));
 	    }while(q<min);
 	    
 		return q;

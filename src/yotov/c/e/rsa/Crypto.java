@@ -6,7 +6,7 @@ public class Crypto {
 	
 	// declarations
 	public static BigInteger[] encrMsg;
-	
+    
 	public static void encrypt(String msg, int e, int n) {
 		// encrypted message array
 		encrMsg = new BigInteger[msg.length()];
@@ -28,13 +28,19 @@ public class Crypto {
 		// convert to bigint
 		BigInteger exp, result, 
 			nBig = BigInteger.valueOf(n);
+		
+		// the decrypted msg
+		char[]decr = new char[encrMsg.length];
 
 		for(int i=0; i<encrMsg.length; i++) {
 			exp = pow(encrMsg[i], d); 
 			result = exp.mod(nBig);
 			//result.intValue();
 			System.out.println((char)result.intValue());
+			decr[i] = (char)result.intValue();	// decrypt the message
 		}
+		// write the decrypted message
+	    Write.writing(decr);	// move this to a for loop
 		
 	}
 	

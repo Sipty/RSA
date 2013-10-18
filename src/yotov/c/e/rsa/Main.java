@@ -43,7 +43,6 @@ public class Main {
 		Crypto.encrypt("Hello", e, n);
 		Crypto.decrypt(d, n);
 		
-		print("Hello.");
 	}
 	
 	// quality of life printer
