@@ -21,26 +21,27 @@ public class Main {
 	
 	// Declarations
 	private static int p,q,n,m,e,d;
-	private String msg;
 	
 	public static void main(String[] args) {
 		
 		// generate & assign primes
 		KeyGen.primeGen();
-		q = KeyGen.getQ();
-		p = KeyGen.getP();
+		q = KeyGen.getPrime();
+		do {
+			p = KeyGen.getPrime();
+		}while(p==q);	// make sure that p & q are different
 		
 		// apply totient
 		m = (q-1)*(p-1);
 		// prepare keys
 		n = q*p;
 		e = KeyGen.coprimeTo(m);
-		d = KeyGen.getD(n, m, e);
+		d = KeyGen.getD(m, e);
 		
 		// output
 		print("q="+q + " p="+p +" n="+n +" m="+m +" e="+e +" d="+d);
 		
-		Crypto.encrypt("Hello, senor!", e, n);
+		Crypto.encrypt("Hello", e, n);
 		Crypto.decrypt(d, n);
 		
 	}

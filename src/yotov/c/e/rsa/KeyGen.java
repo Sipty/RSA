@@ -77,7 +77,7 @@ public class KeyGen {
 	// return e coprime to m
 	public static int coprimeTo(int m) {
 		int e;
-	    for(int i=2; true; i++) {
+	    for(int i=rng(0,max); true; i++) {
 	        if(euclids(i, m)==1) {
 	            e=i;
 	            return e;
@@ -85,8 +85,8 @@ public class KeyGen {
 	    }
 	}
 	
-	// generate d, such that d = (1 + nm) / e
-	public static int getD(int n, int m, int e) {
+	// generate d, such that d = (1 + i*m) / e
+	public static int getD(int m, int e) {
 		int d;
 		for(int i=0; true; i++) {
 	        if((1+i*m)%e==0) {
@@ -105,20 +105,12 @@ public class KeyGen {
 	}
 
 	// getters
-	public static int getP() {
+	public static int getPrime() {
 	    do {
 	        p = primePool.get(rng(0, (primePool.size()-1)));
 	    }while(p<min);
 	    
 		return p;
-	}
-	
-	public static int getQ() {
-	    do {
-	        q = primePool.get(rng(0, (primePool.size()-1)));
-	    }while(q<min);
-	    
-		return q;
 	}
 	
 }

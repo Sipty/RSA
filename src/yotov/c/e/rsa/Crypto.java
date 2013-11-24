@@ -35,6 +35,11 @@ public class Crypto {
 	
 	public static void decrypt(int d, int n) {
 		// read encrypted file
+		
+		// the following block is commented out, due to the program outputting ???????????, 
+		// when asked to decrypt using numbers from a file
+		// to test this, comment out encrypt's usage in Main and uncomment the block
+		
 		/*try {
 			Scanner sc = new Scanner(new File("Encrypted message.txt"));
 
@@ -53,7 +58,7 @@ public class Crypto {
 		String decr="The original message was: \n";
 		
 		for(int i=0; i<encrMsg.size(); i++) {
-			exp = pow(encrMsg.get(i), d); 
+			exp = pow(encrMsg.get(i), d);
 			result = exp.mod(nBig);
 
 			decr += (char)result.intValue();	// decrypt the message
@@ -61,7 +66,6 @@ public class Crypto {
 		}
 		// write the decrypted message to a file
 	    Write.writing(decr, "Decrypted message.txt");
-		
 	}
 	
 	// change to private
