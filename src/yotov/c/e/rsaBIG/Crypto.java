@@ -1,4 +1,4 @@
-package yotov.c.e.rsa.big;
+package yotov.c.e.rsaBIG;
 
 import java.io.File;
 import java.io.IOException;

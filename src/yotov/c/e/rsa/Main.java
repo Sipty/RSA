@@ -17,7 +17,7 @@ package yotov.c.e.rsa;
  * 
  */
 
-public class Main {
+class Main {
 	
 	// Declarations
 	private static int p,q,n,m,e,d;

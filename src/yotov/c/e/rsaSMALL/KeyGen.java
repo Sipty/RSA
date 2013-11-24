@@ -1,9 +1,9 @@
-package yotov.c.e.rsa;
+package yotov.c.e.rsaSMALL;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-class KeyGen {
+public class KeyGen {
 	
 	// Declarations
 	// find all primes up to max

@@ -1,4 +1,4 @@
-package yotov.c.e.rsa;
+package yotov.c.e.rsaSMALL;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Crypto {
+public class Crypto {
 	
 	// declarations
 	//public static int[] encrMsg;
@@ -68,19 +68,22 @@ class Crypto {
 	    Write.writing(decr, "Decrypted message.txt");
 	}
 	
-	// change to private
-	private static BigInteger pow(int x, int n) {
-		BigInteger result = BigInteger.valueOf(1);
-		BigInteger xBig = BigInteger.valueOf(x);
-		while(n!=0) {
-			if(n%2!=0) {
-				result = result.multiply(xBig);
-				n -= 1;
-			}
-			xBig = xBig.multiply(xBig);
-			n /= 2;
+	public static int expand(int message, int exponent, int n) {
+		int result=message;
+		
+		do {
+			exponent-=1;
+			result*=message;
+		}while(result<n);
+		
+		
+		while(exponent>0) {
+			exponent-=1;
+			result = message*(result%n);
 		}
+			
 		return result;
 	}
+	
 	
 }
