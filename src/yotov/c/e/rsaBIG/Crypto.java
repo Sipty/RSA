@@ -13,6 +13,26 @@ public class Crypto {
     private static ArrayList<BigInteger> encrMsg = new ArrayList<BigInteger>();
     
 	public static void encrypt(String msg, BigInteger e, BigInteger n) {
+		int msgPow = 1, msgEncr = 1, charPos = 0;
+		String bin = e.toString(2);
+		
+		// message encryption
+		while(charPos<msg.length()) {
+			// char encryption start
+			for(int i=0; i<bin.length(); i++) {
+				if(bin.charAt(i)==1) {
+					msgEncr =* (int)msg.charAt(charPos)^msgPow % n;
+				}
+				else {
+					msgPow=*2;
+				}
+			}
+			msgEncr =% n;
+			// char encryption end
+			charPos++;	// move the msg character pointer forward
+		}
+	}	
+	/*
 		// encrypted message array
 		BigInteger exp;
 		// the encrypted msg
@@ -29,8 +49,9 @@ public class Crypto {
 			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
 		}	
 		// write the encrypted message to a file
-		//Write.writing(encr, "Encrypted message.txt");
-	}
+		//Write.writing(encr, "Encrypted message.txt"); 
+	*/
+	
 	
 	public static void decrypt(BigInteger d, BigInteger n) {
 		// convert to bigint
@@ -39,17 +60,33 @@ public class Crypto {
 		String decr="The original message was: \n";
 		
 		for(int i=0; i<encrMsg.size(); i++) {
-			exp = d.pow(encrMsg.get(i));
+			exp = pow(encrMsg.get(i), d);
 			result = exp.mod(n);
 
 			decr += (char)result.intValue();	// decrypt the message
 			System.out.println((char)result.intValue());	// output decryption to console
+			
+			//TEST VIEW:
+			System.out.println("TEST: "+result.toString());
+			
 		}
 		// write the decrypted message to a file
 	    //Write.writing(decr, "Decrypted message.txt");
 	}
 	
-	private static BigInteger pow(int x, BigInteger n) {
+	//custom power of, will probably end up changing it out
+	private static BigInteger pow(BigInteger base, BigInteger exponent) {
+		  BigInteger result = BigInteger.ONE;
+		  while (exponent.signum() > 0) {
+		    if (exponent.testBit(0)) result = result.multiply(base);
+		    base = base.multiply(base);
+		    exponent = exponent.shiftRight(1);
+		  }
+		  return result;
+		}
+	
+	/*
+	public static BigInteger pow(int x, BigInteger n) {
 		BigInteger result = BigInteger.valueOf(1);
 		BigInteger xBig = BigInteger.valueOf(x);
 		while(!n.equals(BigInteger.ZERO)) {
@@ -62,5 +99,5 @@ public class Crypto {
 		}
 		return result;
 	}
-	
+	*/
 }

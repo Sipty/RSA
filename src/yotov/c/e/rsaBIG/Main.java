@@ -25,7 +25,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		BigInteger p, q;
-		int length = 1024;	// prime bitlength
+		int length = 256;	// prime numbers' bit length
 		q = KeyGen.primeGen(length);
 		do {
 			p = KeyGen.primeGen(length);
@@ -38,9 +38,10 @@ public class Main {
 		
 		System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
 		
-
+		
 		Crypto.encrypt("Hello!", e, n);
 		//Crypto.decrypt(d, n);
+		
 		
 		/*
 		// generate & assign primes
