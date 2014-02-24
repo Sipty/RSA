@@ -24,7 +24,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		String msg = "Hello!";
+		
 		BigInteger p, q;
+		BigInteger[] encrMsg = new BigInteger[msg.length()];
 		int length = 256;	// prime numbers' bit length
 		q = KeyGen.primeGen(length);
 		do {
@@ -39,7 +42,10 @@ public class Main {
 		System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
 		
 		
-		Crypto.encrypt("Hello!", e, n);
+		encrMsg = Crypto.encrypt(msg, e, n); 
+		for(int i=0; i<msg.length(); i++) {
+			System.out.println(msg.charAt(i) + " = " +encrMsg[i]);
+		}
 		//Crypto.decrypt(d, n);
 		
 		

@@ -12,8 +12,28 @@ public class Crypto {
 	//public static int[] encrMsg;
     private static ArrayList<BigInteger> encrMsg = new ArrayList<BigInteger>();
     
-	public static void encrypt(String msg, BigInteger e, BigInteger n) {
-		int msgPow = 1, msgEncr = 1, charPos = 0;
+    
+    
+    
+	public static BigInteger[] encrypt(String msg, BigInteger e, BigInteger n) {
+		BigInteger msgLetter;
+		
+		// create encrypted msg array 
+		BigInteger[] encr = new BigInteger[msg.length()];
+		
+		//loop through the msg, encrypting every letter and adding it to the encrMsg array
+		for(int i=0; i<msg.length(); i++) {	// loop through each letter
+				
+				msgLetter = BigInteger.valueOf(((int)msg.charAt(i)));	// convert letter's ASCII value to a BigInt
+				
+				encr[i] = msgLetter.modPow(e, n);	// encrypt and put in array
+		}
+		
+		return encr;
+	}
+		/* Almost working modPow
+		int msgPow = 1, charPos = 0;
+		BigInteger msgBig, msgEncr = BigInteger.valueOf(1);
 		String bin = e.toString(2);
 		
 		// message encryption
@@ -21,7 +41,8 @@ public class Crypto {
 			// char encryption start
 			for(int i=0; i<bin.length(); i++) {
 				if(bin.charAt(i)==1) {
-					msgEncr =* (int)msg.charAt(charPos)^msgPow % n;
+					msgBig = BigInteger.valueOf(((int)msg.charAt(charPos)));
+					msgEncr = msgEncr.multiply((msgBig.pow(msgPow))).mod(n);
 				}
 				else {
 					msgPow=*2;
