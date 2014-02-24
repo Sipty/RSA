@@ -14,67 +14,32 @@ public class Crypto {
     
     
     
-    
+    // msg encryption
 	public static BigInteger[] encrypt(String msg, BigInteger e, BigInteger n) {
 		BigInteger msgLetter;
-		
 		// create encrypted msg array 
 		BigInteger[] encr = new BigInteger[msg.length()];
-		
 		//loop through the msg, encrypting every letter and adding it to the encrMsg array
-		for(int i=0; i<msg.length(); i++) {	// loop through each letter
-				
+		for(int i=0; i<msg.length(); i++) {	// loop through each letter				
 				msgLetter = BigInteger.valueOf(((int)msg.charAt(i)));	// convert letter's ASCII value to a BigInt
-				
 				encr[i] = msgLetter.modPow(e, n);	// encrypt and put in array
 		}
-		
 		return encr;
 	}
-		/* Almost working modPow
-		int msgPow = 1, charPos = 0;
-		BigInteger msgBig, msgEncr = BigInteger.valueOf(1);
-		String bin = e.toString(2);
-		
-		// message encryption
-		while(charPos<msg.length()) {
-			// char encryption start
-			for(int i=0; i<bin.length(); i++) {
-				if(bin.charAt(i)==1) {
-					msgBig = BigInteger.valueOf(((int)msg.charAt(charPos)));
-					msgEncr = msgEncr.multiply((msgBig.pow(msgPow))).mod(n);
-				}
-				else {
-					msgPow=*2;
-				}
-			}
-			msgEncr =% n;
-			// char encryption end
-			charPos++;	// move the msg character pointer forward
-		}
-	}	
-	/*
-		// encrypted message array
-		BigInteger exp;
-		// the encrypted msg
-		String encr = "";
-		
-		for(int i=0; i<msg.length(); i++) {
-			// convert to BigInteger
-			int c = (int)msg.charAt(i);
-			// encrypting
-			exp = e.pow(c);
-			encrMsg.add(exp.mod(n));
+	
+	public static String decrypt(BigInteger[] encrMsg, BigInteger d, BigInteger n) {
+		String msg="";
+		BigInteger msgLetter;	// initialize letter
+		for(int i=0; i<encrMsg.length; i++) {
 			
-			encr += encrMsg.get(i)+" ";	// encrypt the message
-			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
-		}	
-		// write the encrypted message to a file
-		//Write.writing(encr, "Encrypted message.txt"); 
-	*/
-	
-	
-	public static void decrypt(BigInteger d, BigInteger n) {
+			msgLetter = encrMsg[i];
+			
+			msg += (char)encrMsg[i].modPow(d, n).intValue();	// convert the decrypted letter to an ASCII symbol
+		}
+		return msg;
+	}
+}	
+		/* old decryption
 		// convert to bigint
 		BigInteger exp, result;
 		// the decrypted msg
@@ -92,9 +57,8 @@ public class Crypto {
 			
 		}
 		// write the decrypted message to a file
-	    //Write.writing(decr, "Decrypted message.txt");
-	}
-	
+	    //Write.writing(decr, "Decrypted message.txt"); 
+		
 	//custom power of, will probably end up changing it out
 	private static BigInteger pow(BigInteger base, BigInteger exponent) {
 		  BigInteger result = BigInteger.ONE;
@@ -104,7 +68,8 @@ public class Crypto {
 		    exponent = exponent.shiftRight(1);
 		  }
 		  return result;
-		}
+		} 
+	*/
 	
 	/*
 	public static BigInteger pow(int x, BigInteger n) {
@@ -121,4 +86,44 @@ public class Crypto {
 		return result;
 	}
 	*/
-}
+	/* Almost working modPow
+	int msgPow = 1, charPos = 0;
+	BigInteger msgBig, msgEncr = BigInteger.valueOf(1);
+	String bin = e.toString(2);
+	
+	// message encryption
+	while(charPos<msg.length()) {
+		// char encryption start
+		for(int i=0; i<bin.length(); i++) {
+			if(bin.charAt(i)==1) {
+				msgBig = BigInteger.valueOf(((int)msg.charAt(charPos)));
+				msgEncr = msgEncr.multiply((msgBig.pow(msgPow))).mod(n);
+			}
+			else {
+				msgPow=*2;
+			}
+		}
+		msgEncr =% n;
+		// char encryption end
+		charPos++;	// move the msg character pointer forward
+	}
+}	
+/*
+	// encrypted message array
+	BigInteger exp;
+	// the encrypted msg
+	String encr = "";
+	
+	for(int i=0; i<msg.length(); i++) {
+		// convert to BigInteger
+		int c = (int)msg.charAt(i);
+		// encrypting
+		exp = e.pow(c);
+		encrMsg.add(exp.mod(n));
+		
+		encr += encrMsg.get(i)+" ";	// encrypt the message
+		System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
+	}	
+	// write the encrypted message to a file
+	//Write.writing(encr, "Encrypted message.txt"); 
+*/

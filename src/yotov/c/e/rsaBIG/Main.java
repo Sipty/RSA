@@ -28,7 +28,7 @@ public class Main {
 		
 		BigInteger p, q;
 		BigInteger[] encrMsg = new BigInteger[msg.length()];
-		int length = 256;	// prime numbers' bit length
+		int length = 1024;	// prime numbers' bit length
 		q = KeyGen.primeGen(length);
 		do {
 			p = KeyGen.primeGen(length);
@@ -41,12 +41,15 @@ public class Main {
 		
 		System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
 		
-		
+		// encrypt the message
 		encrMsg = Crypto.encrypt(msg, e, n); 
 		for(int i=0; i<msg.length(); i++) {
 			System.out.println(msg.charAt(i) + " = " +encrMsg[i]);
 		}
-		//Crypto.decrypt(d, n);
+		
+		// decrypt the message
+		String originalMsg = Crypto.decrypt(encrMsg, d, n);
+		System.out.println("The original message was: "+originalMsg);
 		
 		
 		/*
