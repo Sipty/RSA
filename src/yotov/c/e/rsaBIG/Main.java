@@ -24,11 +24,15 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String msg = "Hello!";
+		// write the message
+		FileHandler.write("file.txt", "MANY SPACES GAZONGAS");
+		// read the message
+		String msg = FileHandler.read("file.txt");;
+		System.out.println(msg);
 		
 		BigInteger p, q;
 		BigInteger[] encrMsg = new BigInteger[msg.length()];
-		int length = 1024;	// prime numbers' bit length
+		int length = 8;	// prime numbers' bit length
 		q = KeyGen.primeGen(length);
 		do {
 			p = KeyGen.primeGen(length);
@@ -44,12 +48,14 @@ public class Main {
 		// encrypt the message
 		encrMsg = Crypto.encrypt(msg, e, n); 
 		for(int i=0; i<msg.length(); i++) {
-			System.out.println(msg.charAt(i) + " = " +encrMsg[i]);
+			if(encrMsg[i] != BigInteger.ZERO) {	// empty cell filter
+				System.out.println(msg.charAt(i) + " = " + encrMsg[i]);	//	original letter = encrypted ASCII value
+			}
 		}
 		
 		// decrypt the message
 		String originalMsg = Crypto.decrypt(encrMsg, d, n);
-		System.out.println("The original message was: "+originalMsg);
+		System.out.println("The original message was: "+ originalMsg +"\n");	// output msg to console
 		
 		
 		/*
