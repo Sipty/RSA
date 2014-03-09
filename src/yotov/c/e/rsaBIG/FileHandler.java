@@ -3,29 +3,24 @@ package yotov.c.e.rsaBIG;
 import java.io.*;
 
 public class FileHandler {
-	public static String read(String fileName) {
-		String msg=null;
-        try {
-            byte[] buffer = new byte[(int) fileName.length()];
-            FileInputStream inputStream = new FileInputStream(fileName);
-            int total=0, nRead=0;
-            
-            while((nRead = inputStream.read(buffer)) > -1) {
-                total += nRead;
-            }	
-            // close stream
-            inputStream.close();	
-            
-            // the message
-            msg = new String(buffer);
-        }
-        
-        catch(FileNotFoundException ex) {System.out.println("Unable to open file '" + fileName + "'");				
-        }
-        catch(IOException ex) {System.out.println("Error reading file '" + fileName + "'");					
-        }
-        
-        return msg;
+	public static String read(String fileName) throws IOException { 
+			 String msg=null;  
+			 byte [] buffer =null;  
+			 
+			 File a_file = new File(fileName);  
+			 try  
+			 {  
+				 FileInputStream fis = new FileInputStream(fileName);  
+				 int length = (int)a_file.length();  
+				 buffer = new byte [length];  
+				 fis.read(buffer);  
+				 fis.close();  
+			 }  
+			 catch(IOException e){e.printStackTrace();
+			 }  
+			 msg = new String(buffer);  
+			 return msg;  
+			 
 	}
 	
 	public static void write(String fileName,String msg) {

@@ -1,5 +1,6 @@
 package yotov.c.e.rsaBIG;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -22,12 +23,12 @@ import java.util.Random;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		// write the message
-		FileHandler.write("file.txt", "MANY SPACES GAZONGAS");
+		FileHandler.write("file.txt", "I'm a working RSA algorithm!");
 		// read the message
-		String msg = FileHandler.read("file.txt");;
+		String msg = FileHandler.read("file.txt");
 		System.out.println(msg);
 		
 		BigInteger p, q;
@@ -36,12 +37,12 @@ public class Main {
 		q = KeyGen.primeGen(length);
 		do {
 			p = KeyGen.primeGen(length);
-		}while(q.equals(p)); 	// make sure that p&q are different
+		} while(q.equals(p)); 	// make sure that p&q are different
 		
 		BigInteger m = q.subtract(BigInteger.ONE).multiply(p.subtract(BigInteger.ONE)); // apply totient
 		BigInteger n = q.multiply(p);	// create n = q*p
 		BigInteger e = KeyGen.coprime(m);	// e coprime to m
-		BigInteger d = e.modInverse(m);	// d = modular inverse of m
+		BigInteger d = KeyGen.modInverse(e, m);	// d = modular inverse of m
 		
 		System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
 		
@@ -56,34 +57,5 @@ public class Main {
 		// decrypt the message
 		String originalMsg = Crypto.decrypt(encrMsg, d, n);
 		System.out.println("The original message was: "+ originalMsg +"\n");	// output msg to console
-		
-		
-		/*
-		// generate & assign primes
-		KeyGen.primeGen();
-		q = KeyGen.getPrime();
-		do {
-			p = KeyGen.getPrime();
-		}while(p==q);	// make sure that p & q are different
-		
-		// apply totient
-		m = (q-1)*(p-1);
-		
-		// prepare keys
-		n = q*p;
-		e = KeyGen.coprimeTo(m);
-		d = KeyGen.getD(m, e);
-		
-		// output
-		print("q="+q + " p="+p +" n="+n +" m="+m +" e="+e +" d="+d);
-		
-		Crypto.encrypt("Hello!", e, n);
-		Crypto.decrypt(d, n);
-		*/
-	}
-	
-	// quality of life printer
-	public static void print(String line) {
-		System.out.println(line);
 	}
 }

@@ -36,6 +36,26 @@ public class KeyGen {
 		return a.add(b);
 	}
 	
+	// extended Euclidean
+	public static BigInteger modInverse(BigInteger e, BigInteger m) {
+		BigInteger i = m, v = BigInteger.ZERO, d = BigInteger.ONE;
+		
+		while (e.compareTo(BigInteger.ZERO) > 0) {
+			BigInteger t = i.divide(e), x = e;
+			e = i.mod(x);
+			i = x;
+			x = d;
+			d = v.subtract(t.multiply(x));
+			v = x;
+		}
+		v = v.mod(m);
+		
+		if (e.compareTo(BigInteger.ZERO) < 0) {
+			v = v.add(m).mod(m);
+		}
+		return v;
+	}
+	
 	// random number generator
 	public static int rng(int min, int max) {
 	    Random rand = new Random();
