@@ -25,6 +25,10 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		
+		// menu loop
+		
+		
+		
 		// write the message
 		FileHandler.write("file.txt", "I'm a working RSA algorithm!");
 		// read the message
@@ -33,7 +37,7 @@ public class Main {
 		
 		BigInteger p, q;
 		BigInteger[] encrMsg = new BigInteger[msg.length()];
-		int length = 8;	// prime numbers' bit length
+		int length = 64;	// prime numbers' bit length
 		q = KeyGen.primeGen(length);
 		do {
 			p = KeyGen.primeGen(length);
