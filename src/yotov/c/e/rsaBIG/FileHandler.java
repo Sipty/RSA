@@ -46,16 +46,11 @@ public class FileHandler {
 
             // Always close files.
             outputStream.close();		
-
-            System.out.println("Wrote " + buffer.length + 
-                " bytes");
         }
         catch(IOException ex) {
             System.out.println(
                 "Error writing file '"
                 + fileName + "'");
-            // Or we could just do this:
-            // ex.printStackTrace();
         }
 	}
 }
