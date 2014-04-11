@@ -30,27 +30,15 @@ public class Main {
 		String command_1, command_2, 
 				file_name="default.txt";
 
-		BigInteger p, q;	// TODO: move to a local declaration, as p/q need to be written to a file
+
 		int length = 64;	// prime numbers' default bit length
-		//TODO: MAKE Q P AND BE READ FROM A FILE
-		q = KeyGen.primeGen(length);
-		do {
-			p = KeyGen.primeGen(length);
-		} while(q.equals(p)); 	// make sure that p&q are different
-		//TODO: MAKE D N BE READ FROM A FILE
-
-		BigInteger m = q.subtract(BigInteger.ONE).multiply(p.subtract(BigInteger.ONE)); // apply totient
-		BigInteger e = KeyGen.coprime(m);	// e coprime to m
-		BigInteger d = KeyGen.modInverse(e, m);	// d = modular inverse of m, n;
-		BigInteger n = q.multiply(p);	// create n = q*p
-
 		
-		
+		// initializing the keys and key components
 		
 		// menu loop
 		System.out.println("Welcome to C. Yotov's RSA implementation!");
 		do {
-			// Main Menu(MM)
+			// Main Menu (MM)
 			System.out.println("\n\n\n+==+ MAIN MENU +==+\n\n"+
 								"-- 1 - Key Creation -- \n"+
 								"-- 2 - Encryption -- \n"+
@@ -61,7 +49,7 @@ public class Main {
 			// MM switch
 			switch(command_1) {
 			
-				// Key Creation(KC) menu
+			// Key Creation(KC) menu
 				case "1":
 
 					boolean kc_loop = true;
@@ -71,19 +59,35 @@ public class Main {
 										"-- 1 - Create public & private keys -- \n"+
 										"-- 2 - Change keys' bit length (current: "+length+" bits) -- \n"+
 										"-- 3 - Go back --");
-					
-					
+						
 						// take input
 						command_2 = user_input.next();
 						switch(command_2) {		
 						
 							// KC
 							case "1":
-								q = KeyGen.primeGen(length);
+								
+								// Q & P creation
+								BigInteger q = KeyGen.primeGen(length), p;
 								do {
 									p = KeyGen.primeGen(length);
 								} while(q.equals(p)); 	// make sure that p&q are different
-								System.out.println("Q and P have been created.");
+								
+								// public & private keys
+								
+								BigInteger n = q.multiply(p),	// create n = q*p
+											m = q.subtract(BigInteger.ONE).multiply(p.subtract(BigInteger.ONE)), // apply totient
+											e = KeyGen.coprime(m),	// e coprime to m
+											d = KeyGen.modInverse(e, m);	// d = modular inverse of m, n;
+								
+								// write down the keys
+								String public_pair = e+" "+n;	// e & n the public pair
+								String private_pair = d+" "+n;	// d & n the private pair
+								
+								FileHandler.write("public.txt", public_pair);
+								FileHandler.write("private.txt", private_pair);
+								
+								System.out.println("\nPublic & Private keys have been created and saved.");
 								break;
 									
 							// Key bit length
@@ -118,11 +122,11 @@ public class Main {
 					}while(kc_loop);
 					break;
 					
-				// Encryption (E)
+			// Encryption (E)
 				case "2":
 					boolean e_loop = true;
 					// create a default text file
-					FileHandler.write("default.txt", "ANGEL IMA MALKA PISHKA HUEHUEHUEHUE #DASIZNAISH");
+					FileHandler.write("default.txt", "anito e pi4");
 					
 					do {
 						System.out.println("\n\n\n+==+ ENCRYPTION +==+ \n\n"+
@@ -141,10 +145,12 @@ public class Main {
 								System.out.println(msg);
 								BigInteger[] encrMsg = new BigInteger[msg.length()];
 								
-								// <<D N M E>> GO HERE -------------------!!!!!!!!!!!!!!!!!
-
-								System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
-
+								// load the public keys
+								String public_key = FileHandler.read("public.txt");
+								String[] keys = public_key.split(" ");	
+								BigInteger e = new BigInteger(keys[0].trim());
+								BigInteger n = new BigInteger(keys[1].trim());
+								
 								// encrypt the message
 								encrMsg = Crypto.encrypt(msg, e, n); 
 								
@@ -169,7 +175,8 @@ public class Main {
 						
 					} while(e_loop);
 					break;
-					
+				
+			// Decryption (D)
 				case "3":
 					boolean d_loop = true;
 					
@@ -201,14 +208,20 @@ public class Main {
 										decrMsg[i] = new BigInteger(values[i].trim());
 								}
 								
-								
+
+								// load the private keys
+								String public_key = FileHandler.read("private.txt");
+								String[] keys = public_key.split(" ");	
+								System.out.println(keys[0]);
+								BigInteger d = new BigInteger(keys[0].trim());
+								BigInteger n = new BigInteger(keys[1].trim());
 								String originalMsg = Crypto.decrypt(decrMsg, d, n);
 								System.out.println("The original message was: "+ originalMsg +"\n");	// output msg to console
 								break;
 								
 							// Go back
 							case "2":
-								e_loop = false;
+								d_loop = false;
 								break;
 						}
 						
