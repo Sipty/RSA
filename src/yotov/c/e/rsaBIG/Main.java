@@ -35,6 +35,8 @@ public class Main {
 		
 		// initializing the keys and key components
 		
+		genFile.read();
+
 		// menu loop
 		System.out.println("Welcome to C. Yotov's RSA implementation!");
 		do {
@@ -125,8 +127,6 @@ public class Main {
 			// Encryption (E)
 				case "2":
 					boolean e_loop = true;
-					// create a default text file
-					FileHandler.write("default.txt", "anito e pi4");
 					
 					do {
 						System.out.println("\n\n\n+==+ ENCRYPTION +==+ \n\n"+

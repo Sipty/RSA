@@ -22,7 +22,7 @@ public class FileHandler {
 			 return msg;  
 			 
 	}
-	
+
 	public static void write(String fileName,String msg) {
 
         try {
