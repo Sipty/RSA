@@ -1,0 +1,7 @@
+p: 211
+q: 223
+m: 46620
+Modulus: 47053
+Key size: 16
+Public key: 17837
+Private key: 22373

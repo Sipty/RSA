@@ -5,7 +5,29 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class KeyGen {
-	
+	public static void main(String[] args) {
+		
+	}
+	public static void keyCreation(int length) {
+		// Q & P creation
+		BigInteger q = KeyGen.primeGen(length), p;
+		do {
+			p = KeyGen.primeGen(length);
+		} while(q.equals(p)); 	// make sure that p&q are different
+		
+		// public & private keys
+		BigInteger n = q.multiply(p),	// create n = q*p
+				m = q.subtract(BigInteger.ONE).multiply(p.subtract(BigInteger.ONE)), // apply totient
+				e = KeyGen.coprime(m),	// e coprime to m
+				d = KeyGen.modInverse(e, m);	// d = modular inverse of m, n;
+		
+		// write down the keys
+		String public_pair = e+" "+n;	// e & n the public pair
+		String private_pair = d+" "+n;	// d & n the private pair
+		
+		FileHandler.write("public.txt", public_pair);
+		FileHandler.write("private.txt", private_pair);	
+	}
     // Prime generation
 	public static BigInteger primeGen(int length) {
 		BigInteger bi;	// bigint object
