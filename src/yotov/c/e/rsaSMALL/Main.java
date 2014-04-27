@@ -46,45 +46,17 @@ public class Main {
 	
 		System.out.println(Crypto.expand(6, 5, 133));
 		
-		/*
-		Crypto.encrypt("Hello", e, n);
-		Crypto.decrypt(d, n);
-		
-		
-		/*
-		BigInteger m = q.subtract(BigInteger.ONE).multiply(p.subtract(BigInteger.ONE)); // apply totient
-		BigInteger n = q.multiply(p);	// create n = q*p
-		BigInteger e = KeyGen.coprime(m);	// e coprime to m
-		BigInteger d = e.modInverse(m);	// d = modular inverse of m
-		
-		System.out.println(" p = " +p +"\n q = "+q+ "\n m = "+m+ "\n n = "+n +"\n e = "+e+"\n d = "+d);
-		
+		final long startTimeEncr = System.currentTimeMillis();
+		Crypto.encrypt("qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq wq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq ", e, n);
+		final long endTimeEncr = System.currentTimeMillis();
 
-		Crypto.encrypt("Hello!", e, n);
-		//Crypto.decrypt(d, n);
-		
-		/*
-		// generate & assign primes
-		KeyGen.primeGen();
-		q = KeyGen.getPrime();
-		do {
-			p = KeyGen.getPrime();
-		}while(p==q);	// make sure that p & q are different
-		
-		// apply totient
-		m = (q-1)*(p-1);
-		
-		// prepare keys
-		n = q*p;
-		e = KeyGen.coprimeTo(m);
-		d = KeyGen.getD(m, e);
-		
-		// output
-		print("q="+q + " p="+p +" n="+n +" m="+m +" e="+e +" d="+d);
-		
-		Crypto.encrypt("Hello!", e, n);
+		final long startTimeDecr = System.currentTimeMillis();
 		Crypto.decrypt(d, n);
-		*/
+		final long endTimeDecr = System.currentTimeMillis();
+		
+		System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
+		System.out.println("Total decryption time: " + (endTimeDecr - startTimeDecr) );
+
 	}
 	
 	// quality of life printer

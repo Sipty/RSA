@@ -1,6 +1,7 @@
 package yotov.c.e.rsa;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ class Crypto {
 			encrMsg.add(exp.mod(nBig).intValue());
 			
 			encr += encrMsg.get(i)+" ";	// encrypt the message
-			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
+			//System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
 		}	
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
@@ -62,7 +63,7 @@ class Crypto {
 			result = exp.mod(nBig);
 
 			decr += (char)result.intValue();	// decrypt the message
-			System.out.println((char)result.intValue());	// output decryption to console
+			//System.out.println((char)result.intValue());	// output decryption to console
 		}
 		// write the decrypted message to a file
 	    Write.writing(decr, "Decrypted message.txt");

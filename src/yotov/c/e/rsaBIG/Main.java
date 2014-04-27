@@ -32,11 +32,30 @@ public class Main {
 		
 		System.out.println("Welcome to C. Yotov's RSA implementation!");
 		
-		// test if this mofo works
-		Crypto encr = new Crypto("rsa_16.txt");
-		encr.encrypt("pic2.jpg", "pic2_fresh.encrypted");
-		Decryption decr = new Decryption("rsa_16.txt");
-		decr.decrypt("pic2_fresh.encrypted", "pic2_fresh.jpg");
+		KeyGen.keyCreation(64);
+		
+		// time the program
+		final long startTimeEncr = System.currentTimeMillis();
+
+		Crypto encr = new Crypto("rsa_public_key.txt");
+		String fn = "pic",
+				fex = ".jpg";
+		encr.encrypt(fn+fex, fn+"_fresh.encrypted");
+		
+		final long endTimeEncr = System.currentTimeMillis();
+
+
+		final long startTimeDecr = System.currentTimeMillis();
+
+		Decryption decr = new Decryption("rsa_private_key.txt");
+		decr.decrypt(fn+"_fresh.encrypted", fn+"_fresh"+fex);
+
+		final long endTimeDecr = System.currentTimeMillis();
+		
+		System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
+		System.out.println("Total encryption time: " + (endTimeDecr - startTimeDecr) );
+
+
 	}
 		
 		

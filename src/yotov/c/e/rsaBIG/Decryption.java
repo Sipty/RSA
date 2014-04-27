@@ -33,7 +33,6 @@ public class Decryption {
 		System.out.println("Modulus: "+n);
 		System.out.println("Key size: "+n.bitLength());
 		System.out.println("Private key: "+d);
-		
 	}
 	
 	// msg decryption

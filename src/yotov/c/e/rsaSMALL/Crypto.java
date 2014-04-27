@@ -1,6 +1,7 @@
 package yotov.c.e.rsaSMALL;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -27,29 +28,13 @@ public class Crypto {
 			encrMsg.add(exp.mod(nBig).intValue());
 			
 			encr += encrMsg.get(i)+" ";	// encrypt the message
-			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
+			//System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
 		}	
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
 	}
 	
 	public static void decrypt(int d, int n) {
-		// read encrypted file
-		
-		// the following block is commented out, due to the program outputting ???????????, 
-		// when asked to decrypt using numbers from a file
-		// to test this, comment out encrypt's usage in Main and uncomment the block
-		
-		/*try {
-			Scanner sc = new Scanner(new File("Encrypted message.txt"));
-
-			for(int i=0; sc.hasNextInt(); i++) {
-				encrMsg.add(sc.nextInt());
-			}
-		} catch (IOException e) {
-			System.err.println("Problem writing to file.");
-		}
-		*/
 		
 		// convert to bigint
 		BigInteger exp, result, 
@@ -82,6 +67,19 @@ public class Crypto {
 			result = message*(result%n);
 		}
 			
+		return result;
+	}
+	private static BigInteger pow(int x, int n) {
+		BigInteger result = BigInteger.valueOf(1);
+		BigInteger xBig = BigInteger.valueOf(x);
+		while(n!=0) {
+			if(n%2!=0) {
+				result = result.multiply(xBig);
+				n -= 1;
+			}
+			xBig = xBig.multiply(xBig);
+			n /= 2;
+		}
 		return result;
 	}
 	

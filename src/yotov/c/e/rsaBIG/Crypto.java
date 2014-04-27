@@ -17,6 +17,8 @@ public class Crypto {
 	private BigInteger e, n;
 	
 	Crypto (String key_file) {
+		// start timing
+		
 		 try {
 	         BufferedReader in = new BufferedReader(new FileReader(key_file));
 	         String line = in.readLine();
@@ -70,7 +72,7 @@ public class Crypto {
 					// convert byte array to positive big int
 				BigInteger clearText = new BigInteger(1, clearTextBlock);
 					// and then encrypt it
-				BigInteger cipherText = clearText.modPow(e,n);
+				BigInteger cipherText = mp(clearText,e,n);
 					// and finally convert back to bytes
 				byte[] cipherTextData = cipherText.toByteArray();
 
@@ -88,7 +90,7 @@ public class Crypto {
 					// convert byte array to positive big int
 				BigInteger clearText = new BigInteger(1, clearTextBlock);
 					//	and then encrypt it
-				BigInteger cipherText = clearText.modPow(e,n);
+				BigInteger cipherText = mp(clearText,e,n);
 					// and finally convert back to bytes
 				byte[] cipherTextData = cipherText.toByteArray();
 				putBytesBlock(cipherTextBlock, cipherTextData);

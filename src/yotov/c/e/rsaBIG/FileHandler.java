@@ -20,16 +20,13 @@ public class FileHandler {
 			 }  
 			 msg = new String(buffer);  
 			 return msg;  
-			 
 	}
 
 	public static void write(String fileName,String msg) {
 
         try {
             // Put some bytes in a buffer so we can
-            // write them. Usually this would be
-            // image data or something. Or it might
-            // be unicode text.
+            // write them. 
             String bytes = msg;
             byte[] buffer = bytes.getBytes();
 
@@ -37,11 +34,7 @@ public class FileHandler {
                 new FileOutputStream(fileName);
 
             // write() writes as many bytes from the buffer
-            // as the length of the buffer. You can also
-            // use
-            // write(buffer, offset, length)
-            // if you want to write a specific number of
-            // bytes, or only part of the buffer.
+            // as the length of the buffer. 
             outputStream.write(buffer);
 
             // Always close files.
