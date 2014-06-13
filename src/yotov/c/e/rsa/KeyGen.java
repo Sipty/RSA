@@ -15,7 +15,7 @@ class KeyGen {
     private static ArrayList<Integer> primePool = new ArrayList<Integer>();
 	
     
-    // a sieve is used to generate the primes
+    // Eratosthene's sieve is used to generate the primes
 	public static void primeGen() {
 		// prepare array
 	    for(int i=0; i<max; i++) numberPool[i]=false;
@@ -52,7 +52,7 @@ class KeyGen {
 	    }
 	}
 
-	// generate the GCD, using Euclid's algorithm
+	// generate the GCD, using Euclidean algorithm
 	public static int euclids(int a, int b) {
 		int temp;
 		// make sure a>b

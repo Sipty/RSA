@@ -3,22 +3,6 @@ package yotov.c.e.rsaSMALL;
 import java.math.BigInteger;
 import java.util.Random;
 
-/* 
- * LEGEND:
- * 
- * q, p - primes
- * m = (q-1)(p-1)
- * 
- * 
- * Public Key:	Private Key:
- * n, e			n, d
- * 
- * n = qp
- * e coprime to m
- * d = (1 + nm) / e 
- * 
- */
-
 public class Main {
 
 	
@@ -47,7 +31,8 @@ public class Main {
 		System.out.println(Crypto.expand(6, 5, 133));
 		
 		final long startTimeEncr = System.currentTimeMillis();
-		Crypto.encrypt("qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq wq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq qwopeiqpweqweqopiewq ", e, n);
+		Crypto.encrypt("Hello!",
+				e, n);
 		final long endTimeEncr = System.currentTimeMillis();
 
 		final long startTimeDecr = System.currentTimeMillis();
@@ -55,7 +40,8 @@ public class Main {
 		final long endTimeDecr = System.currentTimeMillis();
 		
 		System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
-		System.out.println("Total decryption time: " + (endTimeDecr - startTimeDecr) );
+		System.out.println("Total decryption time: " + (endTimeDecr - startTimeDecr) + "\n Bit length of n: "+BigInteger.valueOf(n).bitLength());
+		
 
 	}
 	

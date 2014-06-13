@@ -28,29 +28,13 @@ class Crypto {
 			encrMsg.add(exp.mod(nBig).intValue());
 			
 			encr += encrMsg.get(i)+" ";	// encrypt the message
-			//System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
+			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
 		}	
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
 	}
 	
 	public static void decrypt(int d, int n) {
-		// read encrypted file
-		
-		// the following block is commented out, due to the program outputting ???????????, 
-		// when asked to decrypt using numbers from a file
-		// to test this, comment out encrypt's usage in Main and uncomment the block
-		
-		/*try {
-			Scanner sc = new Scanner(new File("Encrypted message.txt"));
-
-			for(int i=0; sc.hasNextInt(); i++) {
-				encrMsg.add(sc.nextInt());
-			}
-		} catch (IOException e) {
-			System.err.println("Problem writing to file.");
-		}
-		*/
 		
 		// convert to bigint
 		BigInteger exp, result, 
@@ -63,7 +47,7 @@ class Crypto {
 			result = exp.mod(nBig);
 
 			decr += (char)result.intValue();	// decrypt the message
-			//System.out.println((char)result.intValue());	// output decryption to console
+			System.out.println((char)result.intValue());	// output decryption to console
 		}
 		// write the decrypted message to a file
 	    Write.writing(decr, "Decrypted message.txt");

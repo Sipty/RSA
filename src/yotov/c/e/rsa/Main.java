@@ -1,21 +1,8 @@
 package yotov.c.e.rsa;
 
+import java.math.BigInteger;
 
-/* 
- * LEGEND:
- * 
- * q, p - primes
- * m = (q-1)(p-1)
- * 
- * 
- * Public Key:	Private Key:
- * n, e			n, d
- * 
- * n = qp
- * e coprime to m
- * d = (1 + nm) / e 
- * 
- */
+import yotov.c.e.rsaSMALL.Crypto;
 
 class Main {
 	
@@ -41,8 +28,15 @@ class Main {
 		// output
 		print("q="+q + " p="+p +" n="+n +" m="+m +" e="+e +" d="+d);
 		
-		Crypto.encrypt("Hello", e, n);
+		final long startTimeEncr = System.currentTimeMillis();
+		Crypto.encrypt("Hello!",
+				e, n);
+		final long endTimeEncr = System.currentTimeMillis();
+		final long startTimeDecr = System.currentTimeMillis();
 		Crypto.decrypt(d, n);
+		final long endTimeDecr = System.currentTimeMillis();
+		System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
+		System.out.println("Total decryption time: " + (endTimeDecr - startTimeDecr) + "\n Bit length of n: "+BigInteger.valueOf(n).bitLength());
 		
 	}
 	

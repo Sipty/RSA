@@ -48,6 +48,7 @@ public class KeyGen {
 		}while(true);
     }
 	
+	// Euclidean algorithm
 	public static BigInteger gcd(BigInteger a, BigInteger b) {
 		while(!(a.equals(BigInteger.ZERO)) && !(b.equals(BigInteger.ZERO)))
 		{

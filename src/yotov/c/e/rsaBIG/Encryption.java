@@ -11,12 +11,12 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Crypto {
+public class Encryption {
 	
 	// initialize variables
 	private BigInteger e, n;
 	
-	Crypto (String key_file) {
+	Encryption (String key_file) {
 		// start timing
 		
 		 try {

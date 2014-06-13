@@ -4,25 +4,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Scanner;
 
-
-/* 
- * LEGEND:
- * 
- * q, p - primes
- * m = (q-1)(p-1)
- * 
- * 
- * Public Key:	Private Key:
- * n, e			n, d
- * 
- * n = qp
- * e coprime to m
- * d = (1 + nm) / e 
- * 
- */
-
 public class Main {
-	private static int length = 256;	// prime numbers' default bit length
+	private static int length = 512;	// prime numbers' default bit length
 	private static Scanner user_input = new Scanner(System.in); // user input scanner
 	private static String layer_1;	// user input strings
 	private static String layer_2;
@@ -31,13 +14,15 @@ public class Main {
 		boolean quit = false;	// main loop bool
 		
 		System.out.println("Welcome to C. Yotov's RSA implementation!");
-		
-		KeyGen.keyCreation(64);
-		
-		// time the program
+		// If there is a problem with the menu, use the commented code below
+/*
+		final long startTimeKey = System.currentTimeMillis();
+		KeyGen.keyCreation(256);
+		final long endTimeKey = System.currentTimeMillis();
+
 		final long startTimeEncr = System.currentTimeMillis();
 
-		Crypto encr = new Crypto("rsa_public_key.txt");
+		Encryption encr = new Encryption("rsa_public_key.txt");
 		String fn = "pic",
 				fex = ".jpg";
 		encr.encrypt(fn+fex, fn+"_fresh.encrypted");
@@ -53,13 +38,10 @@ public class Main {
 		final long endTimeDecr = System.currentTimeMillis();
 		
 		System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
-		System.out.println("Total encryption time: " + (endTimeDecr - startTimeDecr) );
-
-
-	}
+		System.out.println("Total decryption time: " + (endTimeDecr - startTimeDecr) );
+		System.out.println("Total key creation time: " + (endTimeKey - startTimeKey) );
+*/
 		
-		
-		/*
 		do {
 		// MAIN MENU
 			System.out.println("\n\n\n+==+ MAIN MENU +==+\n\n"+
@@ -83,6 +65,7 @@ public class Main {
 			// DECRYPTION
 				case "3":
 					decryption();
+					break;
 			// exit
 				case "4":
 					quit = true;
@@ -95,7 +78,7 @@ public class Main {
 		
 		
 	}
-	*/
+	
 // KEY CREATION
 	private static void keyCreation() {
 
@@ -103,7 +86,7 @@ public class Main {
 		do {
 			System.out.println("\n\n\n+==+ KEY CREATION +==+ \n\n"+
 							"-- 1 - Create public & private keys -- \n"+
-							"-- 2 - Change keys' bit length (current: "+length+" bits) -- \n"+
+							"-- 2 - Change prime numbers' bit length (current: "+length+" bits) -- \n"+
 							"-- 3 - Go back --");
 			// take input
 			layer_2 = user_input.next();
@@ -150,11 +133,14 @@ public class Main {
 	private static void encryption() {
 
 		boolean e_loop = true;
+		// default file names
+		String fn= "pic", fex=".jpg";
 		
 		do {
 			System.out.println("\n\n\n+==+ ENCRYPTION +==+ \n\n"+
 								"-- 1 - Begin encryption -- \n"+
-								"-- 2 - Go back -- \n");
+								"-- 2 - Change file name. (Currently:" +fn+fex+") -- \n"+
+								"-- 3 - Go back -- \n");
 			
 			// take input
 			layer_2 = user_input.next();
@@ -162,94 +148,94 @@ public class Main {
 				
 				// Begin encryption
 				case "1":
-					try {
-					BigInteger intBlocks[] = genFile.read(length); 
-					BigInteger[] encrMsg = new BigInteger[intBlocks.length];
-					genFile.write(intBlocks);
-					// load the public keys
-					String public_key = FileHandler.read("public.txt");
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-					String[] keys = public_key.split(" ");	
-					BigInteger e = new BigInteger(keys[0].trim());
-					BigInteger n = new BigInteger(keys[1].trim());
 					
-					// encrypt the message
-					encrMsg = Crypto.encrypt(intBlocks, e, n); 
+					final long startTimeEncr = System.currentTimeMillis();
+
+					Encryption encr = new Encryption("rsa_public_key.txt");
 					
-					// write cipher text to file
-					String encrMsg_String="";
+					encr.encrypt(fn+fex, fn+"_fresh.encrypted");
+					
+					final long endTimeEncr = System.currentTimeMillis();
 
-					for(int i=0; i<encrMsg.length; i++) {
-						encrMsg_String+=encrMsg[i]+" ";
-
-
-					}
-					FileHandler.write("encrypted_msg.txt", encrMsg_String);
+					System.out.println("Total encryption time: " + (endTimeEncr - startTimeEncr) );
 
 					break;
 					
 				// Go back
-				case "2":
+				case "2": 
+					boolean kbl_loop;	// loops until valid input is given
+
+					
+					System.out.println("Enter file name, hit enter and then write the file format (eg. .txt):");
+					
+					do{
+						try {
+							fn=user_input.next();
+							fex = user_input.next();
+							kbl_loop = false;
+						}
+						catch(Exception excptn) {
+							System.out.println("Error: not an integer!\n"+
+												"Try again: ");
+							kbl_loop = true;
+						}
+					}while(kbl_loop);
+					
+					break;
+				case "3":
 					e_loop = false;
 					break;
 			}
 			
 		} while(e_loop);
-		break;
-	
 	}
 
 //DECRYPTION
 	private static void decryption() {
 		boolean d_loop = true;
-		
+		String fn= "pic", fex=".jpg";
+
 		do {
 			System.out.println("\n\n\n+==+ DECRYPTION +==+ \n\n"+
 								"-- 1 - Begin decryption -- \n"+
-								"-- 2 - Go back -- \n");
-			
-			// take input
+								"-- 2 - Change file name (Currently:" +fn+fex+") -- \n"+
+								"-- 3 - Go back -- \n");
 			layer_2 = user_input.next();
 			switch(layer_2) {
-				
-				// Begin encryption
 				case "1":
-					
-					// decrypt the message
-
-					// load the cipher file
-					String msg = FileHandler.read("encrypted_msg.txt");
-					// create the array holding each encrypted block
-					// and one that will keep the decrypted message
-					String[] values = msg.split(" ");	
-					BigInteger[] decrMsg = new BigInteger[values.length];
-					
-					for(int i=0; i<values.length; i++) {
-						System.out.println(values[i]);
-						if(values[i] != null)
-							decrMsg[i] = new BigInteger(values[i].trim());
-					}
-					
-
-					// load the private keys
-					String public_key = FileHandler.read("private.txt");
-					String[] keys = public_key.split(" ");	
-					System.out.println(keys[0]);
-					BigInteger d = new BigInteger(keys[0].trim());
-					BigInteger n = new BigInteger(keys[1].trim());
-					
-					genFile.write(Crypto.decrypt(decrMsg, d, n));
+					final long startTimeDecr = System.currentTimeMillis();
+		
+					Decryption decr = new Decryption("rsa_private_key.txt");
+					decr.decrypt(fn+"_fresh.encrypted", fn+"_fresh"+fex);
+		
+					final long endTimeDecr = System.currentTimeMillis();
 					break;
 					
-				// Go back
-				case "2":
-					d_loop = false;
-					break;
+				case "2": 
+					boolean kbl_loop;	// loops until valid input is given
+		
+					System.out.println("Enter file name, hit enter and then write the file format (eg. .txt):");
+					
+					do{
+						try {
+							fn=user_input.next();
+							fex = user_input.next();
+							kbl_loop = false;
+						}
+						catch(Exception excptn) {
+							System.out.println("Error: not an integer!\n"+
+												"Try again: ");
+							kbl_loop = true;
+						}
+					}while(kbl_loop);
+					
+							break;
+							
+						// Go back
+					case "3":
+							d_loop = false;
+							break;
 			}
-			
 		} while(d_loop);
-		break;
 	}
 }

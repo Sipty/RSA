@@ -28,7 +28,7 @@ public class Crypto {
 			encrMsg.add(exp.mod(nBig).intValue());
 			
 			encr += encrMsg.get(i)+" ";	// encrypt the message
-			//System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
+			System.out.println("From: "+c+" to "+encrMsg.get(i));	// output encryption to console
 		}	
 		// write the encrypted message to a file
 		Write.writing(encr, "Encrypted message.txt");
